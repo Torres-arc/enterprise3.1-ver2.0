@@ -1,0 +1,17 @@
+beautifulsoup4==4.9.3
+chromedriver==2.24.1
+configparser==5.0.1
+jsonschema==3.2.0
+lxml==4.6.2
+numpy==1.19.1
+opencv-contrib-python==3.4.2.17
+Pillow==8.0.1
+pypiwin32==223
+PyUserInput==0.1.11
+pywin32==300
+pywinauto==0.6.3
+requests==2.20.1
+selenium==3.141.0
+six==1.15.0
+urllib3==1.24.3
+xlwings==0.21.4
