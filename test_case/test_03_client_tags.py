@@ -8,7 +8,7 @@ from commons.log import log
 from BeautifulReport import BeautifulReport
 
 
-@unittest.skip('1')
+# @unittest.skip('1')
 class TestClientTags(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
