@@ -3,6 +3,7 @@ from commons.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 from commons.App_base import *
+from commons.log import log
 from config.readConfig import MassHair
 
 '''新增群发页面！！！'''
@@ -16,6 +17,24 @@ class AddmessagePage(BasePage):
     _btn_addmessage = (By.XPATH, '//li[text()=" 企业群发 "]')
     # 新建群发按钮
     _btn_create_msg = (By.XPATH, '//span[text()="新建企业群发"]/..')
+    # 内容消息列表
+    _texts_msg = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(1)>div")
+    # 创建开始日期搜索
+    _input_search_creat_start_time = (By.CSS_SELECTOR, 'input[placeholder="开始时间"]')
+    # 创建结束日期搜索
+    _input_search_creat_end_time = (By.CSS_SELECTOR, 'input[placeholder="结束时间"]')
+    # 内容搜索
+    _input_search_msg = (By.CSS_SELECTOR, 'input[placeholder="请输入"]')
+    # 查询
+    _btn_search = (By.XPATH, "//span[text()='查询']/..")
+    # 创建日期列表
+    _texts_create_time = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(4)>div")
+    # 页面数
+    _text_page_num = (By.CSS_SELECTOR, '.el-pager li:last-child')
+    # 翻页按钮
+    _btn_next_page = (By.CSS_SELECTOR, '.btn-next')
+
+    # 新建群发页面
     # 发送范围
     _btn_send_range = (By.XPATH, '//span[text()="发送给客户群"]/preceding-sibling::span')
     # 按群主选择客户群
@@ -72,6 +91,32 @@ class AddmessagePage(BasePage):
     # 新建群发按钮
     def get_btn_create_msg(self):
         return self.find_Element(self._btn_create_msg)
+    # 内容消息列表
+    def get_texts_msg(self):
+        return self.find_Elements(self._texts_msg)
+    # 创建开始日期搜索
+    def get_input_search_creat_start_time(self):
+        return self.find_Element(self._input_search_creat_start_time)
+    # 创建结束日期搜索
+    def get_input_search_creat_end_time(self):
+        return self.find_Element(self._input_search_creat_end_time)
+    # 内容搜索
+    def get_input_search_msg(self):
+        return self.find_Element(self._input_search_msg)
+    # 查询
+    def get_btn_search(self):
+        return self.find_Element(self._btn_search)
+    # 创建日期列表
+    def get_texts_create_time(self):
+        return self.find_Elements(self._texts_create_time)
+    # 页面数
+    def get_text_page_num(self):
+        return self.find_Element(self._text_page_num)
+    # 翻页按钮
+    def get_btn_next_page(self):
+        return self.find_Element(self._btn_next_page)
+
+    # 新建群发页面
     # 发送范围
     def get_btn_send_range(self):
         return self.find_Element(self._btn_send_range)
@@ -162,6 +207,32 @@ class AddmessagePage(BasePage):
     # 新建群发按钮
     def click_btn_create_msg(self):
         return self.click_element(self.get_btn_create_msg())
+    # 内容消息列表
+    def gettexts_texts_msg(self):
+        return self.get_elements_values(self.get_texts_msg())
+    # 创建开始日期搜索
+    def sendkeys_input_search_creat_start_time(self, value):
+        return self.send_keys(self.get_input_search_creat_start_time(), value)
+    # 创建结束日期搜索
+    def sendkeys_input_search_creat_end_time(self, value):
+        return self.send_keys(self.get_input_search_creat_end_time(), value)
+    # 内容搜索
+    def sendkeys_input_search_msg(self, value):
+        return self.send_keys(self.get_input_search_msg(), value)
+    # 查询
+    def click_btn_search(self):
+        return self.click_element(self.get_btn_search())
+    # 创建日期列表
+    def gettexts_texts_create_time(self):
+        return self.get_elements_values(self.get_texts_create_time())
+    # 页面数
+    def gettexts_text_page_num(self):
+        return self.get_element_value(self.get_text_page_num())
+    # 翻页按钮
+    def click_btn_next_page(self):
+        return self.click_element(self.get_btn_next_page())
+
+    # 新建群发页面
     # 发送范围
     def click_btn_send_range(self):
         return self.click_element(self.get_btn_send_range())
@@ -324,3 +395,35 @@ class AddmessagePage(BasePage):
         self.click_btn_send()
         sleep(3)
         self.switch_to_current()
+
+    def search_by_msg(self, msg):
+        self.sendkeys_input_search_msg(msg)
+        sleep(2)
+        self.click_btn_search()
+        sleep(2)
+        pages = int(self.gettexts_text_page_num())  # 页码
+        count = 1
+        while pages > 0 and count <= 3:
+            try:
+                msglist = self.gettexts_texts_msg()  # 搜索目标
+            except TimeoutError:
+                try:
+                    self.check_exist_in_page('暂无数据')  # 无数据时的页面信息
+                except Exception as e:
+                    raise e
+                else:
+                    log.info("搜索条件下无数据")
+                    print('搜索条件下无数据')
+            except Exception as e:
+                raise e
+            else:  # 存在数据，进行验证
+                for i in msglist:
+                    try:
+                        self.check_exist_in_lists(msg, i)
+                    except AssertionError as e:
+                        print('搜索条件与数据不匹配')
+                        raise e
+            self.click_btn_next_page()  # 翻页
+            sleep(2)
+            pages -= 1
+            count += 1

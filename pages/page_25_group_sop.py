@@ -339,7 +339,7 @@ class GroupSOP(BasePage):
                 except Exception as e:
                     raise e
                 else:
-                    self.printout('搜索条件下无数据')
+                    print('搜索条件下无数据')
             except Exception as e:
                 raise e
             else:  # 存在数据，进行验证
@@ -347,7 +347,7 @@ class GroupSOP(BasePage):
                     try:
                         self.check_exist_in_lists(name, i)
                     except AssertionError as e:
-                        self.printout('搜索条件与数据不匹配')
+                        print('搜索条件与数据不匹配')
                         raise e
             self.click_btn_next_page()  # 翻页
             sleep(2)

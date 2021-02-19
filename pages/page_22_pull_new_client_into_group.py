@@ -344,7 +344,7 @@ class PullNewClientIntoGroup(BasePage):
                     ele = self.find_Element(By.XPATH, '//span[text()="暂无数据"]')  # 无数据时的页面信息
                     rect = self.locate_element(ele)
                     self.GetScreen('按时间搜索，无数据', rect=rect)
-                    self.printout('搜索条件下无数据')
+                    print('搜索条件下无数据')
             except Exception as e:
                 raise e
             else:  # 存在数据，进行验证
@@ -355,7 +355,7 @@ class PullNewClientIntoGroup(BasePage):
                         ele = self.find_Element(By.XPATH, '//div[text()="{}"]'.format(i))
                         rect = self.locate_element(ele)
                         self.GetScreen('按日期搜索，错误', rect=rect)
-                        self.printout('搜索条件与数据不匹配')
+                        print('搜索条件与数据不匹配')
                         raise e
             self.click_btn_next_page()  # 翻页
             sleep(2)

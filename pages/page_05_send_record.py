@@ -8,36 +8,28 @@ from pykeyboard import PyKeyboard
 
 
 class sendRecord_page(BasePage):
-    # 元素定位信息
+    """元素定位信息"""
 
-    # 群发记录
-    _sendRecord = (By.XPATH, "//li[text()='群发列表']")
-
-    # 内容消息
-    _text = (
-        By.XPATH, "(//label[text()='内容消息']/following::input)[1]")
-    # 群发类型
-    _type = (By.CSS_SELECTOR, '.el-select--small .el-input__inner')
-    # 发送客户
-    _sendcus = (By.XPATH, '//body/div[2]/div/div/ul/li[2]/span')
+    # 客户营销tab
+    _btn_client_marketing_tab = (By.XPATH, '//span[text()="客户营销"]/..')
+    # 企业群发页面
+    _btn_addmessage = (By.XPATH, '//li[text()=" 企业群发 "]')
+    # 内容消息列表
+    _texts_msg = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(1)>div")
+    # 创建开始日期搜索
+    _input_search_creat_start_time = (By.CSS_SELECTOR, 'input[placeholder="开始时间"]')
+    # 创建结束日期搜索
+    _input_search_creat_end_time = (By.CSS_SELECTOR, 'input[placeholder="结束时间"]')
+    # 内容搜索
+    _input_search_msg = (By.CSS_SELECTOR, 'input[placeholder="请输入"]')
     # 查询
-    _serachBtn = (By.XPATH, "//span[text()='查询']")
-    _tr = (By.CSS_SELECTOR, " tbody tr td:nth-child(2) div")
-    # 查询后的内容
-    _text1 = (By.CSS_SELECTOR, " tbody tr td:nth-child(1) div")
-    # 开始时间
-    _startTime = (
-        By.XPATH,
-        '//*[@id="app"]/section/section/section/main/div/div[1]/div/div/form/div[2]/div/div[2]/div/div/input[1]')
-    # 结束时间
-    _endTime = (
-        By.XPATH,
-        '//*[@id="app"]/section/section/section/main/div/div[1]/div/div/form/div[2]/div/div[2]/div/div/input[2]')
-    # 查询后的日期
-    _time1 = (By.CSS_SELECTOR, 'div[class$="none"] tbody tr td:nth-child(4) div')
-    # 重置按钮
-    _reset = (By.XPATH, '//*[@id="app"]/section/section/section/main/div/div[1]/div/div/form/div[4]/div/button[2]')
-    _totalnum = (By.CSS_SELECTOR, '.el-pagination__total')
+    _btn_serach = (By.XPATH, "//span[text()='查询']/..")
+    # 创建日期列表
+    _texts_create_time = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(4)>div")
+    # 页面数
+    _text_page_num = (By.CSS_SELECTOR, '.el-pager li:last-child')
+    # 翻页按钮
+    _btn_next_page = (By.CSS_SELECTOR, '.btn-next')
 
     '''元素定位层'''
 
