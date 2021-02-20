@@ -106,6 +106,22 @@ class AddMessage(unittest.TestCase):
         self.driver.refresh()
         log().info('执行结束:用例-发送给客户群->小程序内容')
 
+    def test_11_searchByMsg(self):
+        """测试按消息内容搜索"""
+        log().info('开始执行:用例-按消息内容搜索')
+        self.driver.refresh()
+        AddmessagePage(self.driver).search_by_msg(amp.msg)
+        self.driver.refresh()
+        log().info('执行结束:用例-按消息内容搜索')
+
+    def test_12_searchByTime(self):
+        """测试按消息内容搜索"""
+        log().info('开始执行:用例-按时间搜索')
+        self.driver.refresh()
+        AddmessagePage(self.driver).search_by_msg(amp.msg)
+        self.driver.refresh()
+        log().info('执行结束:用例-按时间搜索')
+
 
 if __name__ == '__main__':
     unittest.main()

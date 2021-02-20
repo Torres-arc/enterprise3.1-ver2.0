@@ -1,3 +1,5 @@
+import datetime
+
 from selenium.webdriver.common.by import By
 from commons.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
@@ -412,7 +414,6 @@ class AddmessagePage(BasePage):
                 except Exception as e:
                     raise e
                 else:
-                    log.info("搜索条件下无数据")
                     print('搜索条件下无数据')
             except Exception as e:
                 raise e
@@ -420,6 +421,42 @@ class AddmessagePage(BasePage):
                 for i in msglist:
                     try:
                         self.check_exist_in_lists(msg, i)
+                    except AssertionError as e:
+                        print('搜索条件与数据不匹配')
+                        raise e
+            self.click_btn_next_page()  # 翻页
+            sleep(2)
+            pages -= 1
+            count += 1
+
+    def search_by_time(self, stime, etime):
+        self.sendkeys_input_search_creat_start_time(stime)
+        sleep(1)
+        self.sendkeys_input_search_creat_end_time(etime)
+        sleep(1)
+        self.click_btn_search()
+        sleep(2)
+        pages = int(self.gettexts_text_page_num())  # 页码
+        count = 1
+        while pages > 0 and count <= 3:
+            try:
+                datelist = self.gettexts_texts_create_time()  # 搜索目标
+            except TimeoutError:
+                try:
+                    self.check_exist_in_page('暂无数据')  # 无数据时的页面信息
+                except Exception as e:
+                    raise e
+                else:
+                    print('搜索条件下无数据')
+            except Exception as e:
+                raise e
+            else:  # 存在数据，进行验证
+                for i in datelist:
+                    st = datetime.datetime.strptime(stime, '%Y-%m-%d')
+                    et = datetime.datetime.strptime(etime, '%Y-%m-%d')
+                    nt = datetime.datetime.strptime(i, '%Y-%m-%d')
+                    try:
+                        self.assert_True(st <= nt <= et, '验证{} <= {} <= {}'.format(st, nt, et))
                     except AssertionError as e:
                         print('搜索条件与数据不匹配')
                         raise e

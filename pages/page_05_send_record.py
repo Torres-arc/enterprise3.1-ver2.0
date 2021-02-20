@@ -14,25 +14,9 @@ class sendRecord_page(BasePage):
     _btn_client_marketing_tab = (By.XPATH, '//span[text()="客户营销"]/..')
     # 企业群发页面
     _btn_addmessage = (By.XPATH, '//li[text()=" 企业群发 "]')
-    # 内容消息列表
-    _texts_msg = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(1)>div")
-    # 创建开始日期搜索
-    _input_search_creat_start_time = (By.CSS_SELECTOR, 'input[placeholder="开始时间"]')
-    # 创建结束日期搜索
-    _input_search_creat_end_time = (By.CSS_SELECTOR, 'input[placeholder="结束时间"]')
-    # 内容搜索
-    _input_search_msg = (By.CSS_SELECTOR, 'input[placeholder="请输入"]')
-    # 查询
-    _btn_serach = (By.XPATH, "//span[text()='查询']/..")
-    # 创建日期列表
-    _texts_create_time = (By.CSS_SELECTOR, "tbody>tr>td:nth-child(4)>div")
-    # 页面数
-    _text_page_num = (By.CSS_SELECTOR, '.el-pager li:last-child')
-    # 翻页按钮
-    _btn_next_page = (By.CSS_SELECTOR, '.btn-next')
+
 
     '''元素定位层'''
-
     # 群发记录
     def get_sendRecord(self):
         return self.find_Element(self._sendRecord)
