@@ -1,3 +1,5 @@
+
+
 from imp import reload
 from pages.page_06_client_code import ClientCodePage
 import unittest
@@ -27,16 +29,7 @@ class AddEmployeeCode(unittest.TestCase):
         cls.driver.quit()
 
     # @unittest.skip('1')
-    # def test_01_checkData(self):
-    #     """测试页面信息显示正确"""
-    #     self.driver.refresh()
-    #     log().info('开始执行:用例-测试页面信息显示正确')
-    #     ClientCodePage(self.driver).check_page_data()
-    #     self.driver.refresh()
-    #     log().info('执行结束:用例-测试页面信息显示正确')
-
-    # @unittest.skip('1')
-    def test_02_searchByUser(self):
+    def test_01_searchByUser(self):
         """测试按使用员工搜索"""
         self.driver.refresh()
         log().info('开始执行:用例-测试按使用员工搜索')
@@ -45,25 +38,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试按使用员工搜索')
 
     # @unittest.skip('1')
-    # def test_03_searchByName(self):
-    #     """测试按姓名搜索"""
-    #     self.driver.refresh()
-    #     log().info('开始执行:用例-测试按姓名搜索')
-    #     ClientCodePage(self.driver).search_by_type('name', ccp.user)
-    #     self.driver.refresh()
-    #     log().info('执行结束:用例-测试按姓名搜索')
-
-    # @unittest.skip('1')
-    # def test_04_searchByTelNum(self):
-    #     """测试按电话号码搜索"""
-    #     self.driver.refresh()
-    #     log().info('开始执行:用例-测试按电话号码搜索')
-    #     ClientCodePage(self.driver).search_by_type('tel', ccp.tel)
-    #     self.driver.refresh()
-    #     log().info('执行结束:用例-测试按电话号码搜索')
-
-    # @unittest.skip('1')
-    def test_05_searchByActScene(self):
+    def test_02_searchByActScene(self):
         """测试按活动场景搜索"""
         self.driver.refresh()
         log().info('开始执行:用例-测试按活动场景搜索')
@@ -72,16 +47,16 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试按活动场景搜索')
 
     # @unittest.skip('1')
-    # def test_06_searchByCreator(self):
-    #     """测试按创建人搜索"""
-    #     self.driver.refresh()
-    #     log().info('开始执行:用例-测试按创建人搜索')
-    #     ClientCodePage(self.driver).search_by_type('creator', ccp.creator)
-    #     self.driver.refresh()
-    #     log().info('执行结束:用例-测试按创建人搜索')
+    def test_03_searchByCreator(self):
+        """测试按创建人搜索"""
+        self.driver.refresh()
+        log().info('开始执行:用例-测试按创建人搜索')
+        ClientCodePage(self.driver).search_by_type('creator', ccp.creator)
+        self.driver.refresh()
+        log().info('执行结束:用例-测试按创建人搜索')
 
     # @unittest.skip('1')
-    def test_07_searchByCreateTime(self):
+    def test_04_searchByCreateTime(self):
         """测试按创建时间搜索"""
         self.driver.refresh()
         log().info('开始执行:用例-测试按创建时间搜索')
@@ -90,16 +65,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试按创建时间搜索')
 
     # @unittest.skip('1')
-    def test_08_resetSearch(self):
-        """测试重置功能"""
-        self.driver.refresh()
-        log().info('开始执行:用例-测试重置功能')
-        ClientCodePage(self.driver).reset_search(ccp.stime, ccp.etime)
-        self.driver.refresh()
-        log().info('执行结束:用例-测试重置功能')
-
-    # @unittest.skip('1')
-    def test_09_addSingleClientWebCode(self):
+    def test_05_addSingleClientWebCode(self):
         """测试添加单人活码-网页"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加单人活码-网页')
@@ -117,19 +83,19 @@ class AddEmployeeCode(unittest.TestCase):
 
     @unittest.skipIf(isPassed is False, '未成功创建活码，请重试')
     # @unittest.skip('1')
-    def test_10_checkCodeInfo(self):
+    def test_06_checkCodeInfo(self):
         """测试查看详情功能"""
         self.driver.refresh()
         log().info('开始执行:用例-测试查看详情功能')
         reload(rc)
         ClientCodePage(self.driver).check_code_info(
-            [ccp.actscene, ccp.welcome, rc.clientcodepage.taglist, ccp.web_msg])
+            [ccp.actscene, rc.clientcodepage.taglist, ccp.welcome])
         ClientCodePage(self.driver).switch_to_current()
         log().info('执行结束:用例-测试查看详情功能')
 
     @unittest.skipIf(isPassed is False, '未成功创建活码，请重试')
     # @unittest.skip('1')
-    def test_11_editCode(self):
+    def test_07_editCode(self):
         """测试编辑活码功能"""
         self.driver.refresh()
         log().info('开始执行:用例-测试编辑活码功能')
@@ -137,18 +103,9 @@ class AddEmployeeCode(unittest.TestCase):
         self.driver.refresh()
         log().info('执行结束:用例-测试编辑活码功能')
 
-    # @unittest.skip('1')
-    def test_12_copyLinkCode(self):
-        """测试复制链接功能"""
-        self.driver.refresh()
-        log().info('开始执行:用例-测试复制链接功能')
-        ClientCodePage(self.driver).copy_link()
-        self.driver.refresh()
-        log().info('执行结束:用例-测试复制链接功能')
-
     @unittest.skipIf(isPassed is False, '未成功创建活码，请重试')
     @unittest.skip('1')
-    def test_13_integratedTest(self):
+    def test_08_integratedTest(self):
         """测试前后端集成，验证欢迎语标签功能"""
         self.driver.refresh()
         log().info('开始执行:用例-前后端集成，验证欢迎语标签功能')
@@ -158,7 +115,7 @@ class AddEmployeeCode(unittest.TestCase):
 
     # @unittest.skip('1')
     @unittest.skipIf(isPassed is False, '未成功创建活码，请重试')
-    def test_14_deleteCode(self):
+    def test_09_deleteCode(self):
         """测试删除单个活码"""
         self.driver.refresh()
         log().info('开始执行:用例-测试删除单个活码')
@@ -168,7 +125,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试删除单个活码')
 
     # @unittest.skip('1')
-    def test_15_addSingleClientPicCode(self):
+    def test_10_addSingleClientPicCode(self):
         """测试添加单人活码-图片"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加单人活码-图片')
@@ -182,7 +139,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加单人活码-图片')
 
     # @unittest.skip('1')
-    def test_16_addSingleClientMiniCode(self):
+    def test_11_addSingleClientMiniCode(self):
         """测试添加单人活码-小程序"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加单人活码-小程序')
@@ -196,7 +153,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加单人活码-小程序')
 
     # @unittest.skip('1')
-    def test_17_addBatchSingleClientMiniCode(self):
+    def test_12_addBatchSingleClientMiniCode(self):
         """测试添加批量单人活码-小程序"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加批量单人活码-小程序')
@@ -211,7 +168,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加批量单人活码-小程序')
 
     # @unittest.skip('1')
-    def test_18_addBatchSingleClientPicCode(self):
+    def test_13_addBatchSingleClientPicCode(self):
         """测试添加批量单人活码-图片"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加批量单人活码-图片')
@@ -226,7 +183,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加批量单人活码-图片')
 
     # @unittest.skip('1')
-    def test_19_addBatchSingleClientWebCode(self):
+    def test_14_addBatchSingleClientWebCode(self):
         """测试添加批量单人活码-网页"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加批量单人活码-网页')
@@ -241,7 +198,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加批量单人活码-网页')
 
     # @unittest.skip('1')
-    def test_20_addMultiClientWebCode(self):
+    def test_15_addMultiClientWebCode(self):
         """测试添加多人活码-网页"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加多人活码-网页')
@@ -256,7 +213,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加多人活码-网页')
 
     # @unittest.skip('1')
-    def test_21_addMultiClientMiniCode(self):
+    def test_16_addMultiClientMiniCode(self):
         """测试添加多人活码-小程序"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加多人活码-小程序')
@@ -271,11 +228,11 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加多人活码-小程序')
 
     # @unittest.skip('1')
-    def test_22_addMultiClientPicCode(self):
+    def test_17_addMultiClientPicCode(self):
         """测试添加多人活码-图片"""
         self.driver.refresh()
         log().info('开始执行:用例-测试添加多人活码-图片')
-        ClientCodePage(self.driver).add_code((ccp.actscene + '8'),
+        ClientCodePage(self.driver).add_code((ccp.actscene + ' 8'),
                                              ccp.welcome,
                                              'pic',
                                              ccp.picpath,
@@ -286,31 +243,13 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('执行结束:用例-测试添加多人活码-图片')
 
     # @unittest.skip('1')
-    def test_23_createCodeInBatch(self):
-        """测试批量新建活码"""
-        self.driver.refresh()
-        log().info('开始执行:用例-测试批量新建活码')
-        ClientCodePage(self.driver).create_in_batch(ccp.user, ccp.user2)
-        self.driver.refresh()
-        log().info('执行结束:用例-测试批量新建活码')
-
-    # @unittest.skip('1')
-    def test_24_deleteCodeInBatch(self):
+    def test_18_deleteCodeInBatch(self):
         """测试批量删除活码"""
         self.driver.refresh()
         log().info('开始执行:用例-测试批量删除活码')
         ClientCodePage(self.driver).delete_code_in_batch()
         self.driver.refresh()
         log().info('执行结束:用例-测试批量删除活码')
-
-    # @unittest.skip('1')
-    def test_25_exportCodeInfo(self):
-        """测试导出功能"""
-        self.driver.refresh()
-        log().info('开始执行:用例-测试导出功能')
-        ClientCodePage(self.driver).export()
-        self.driver.refresh()
-        log().info('执行结束:用例-测试导出功能')
 
 
 if __name__ == '__main__':
