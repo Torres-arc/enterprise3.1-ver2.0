@@ -55,6 +55,8 @@ class ClientPage(BasePage):
     # 客户详情页面
     # 所有标签
     _texts_full_tags = (By.XPATH, '//span[@class="el-tag el-tag--info el-tag--light"]')
+    # 所有添加人
+    _texts_full_adders = (By.CSS_SELECTOR, '.t-row ww-open-data[type="userName"]')
 
     '''元素定位层'''
     # 本页面元素
@@ -121,7 +123,10 @@ class ClientPage(BasePage):
     # 客户详情页面
     # 所有标签
     def get_texts_full_tags(self):
-        return self.find_Element(self._texts_full_tags)
+        return self.find_Elements(self._texts_full_tags)
+    # 所有添加人
+    def get_texts_full_adders(self):
+        return self.find_Elements(self._texts_full_adders)
 
     '''元素操作层'''
 
@@ -194,6 +199,12 @@ class ClientPage(BasePage):
     # 所有标签
     def gettexts_texts_full_tags(self):
         return self.get_elements_values(self.get_texts_full_tags())
+    # 所有添加人
+    def gettexts_texts_full_adders(self):
+        list = []
+        for i in self.get_texts_full_adders():
+            list.append(i.get_attribute('openid'))
+        return list
 
     '''业务层'''
     # 跳转至客户页面
@@ -308,19 +319,16 @@ class ClientPage(BasePage):
         if int(number) <= 3:
             while n <= int(number):
                 alist = self.gettexts_texts_clients_adders()
-                print(alist)
                 for i in alist:
-                    print(i)
                     list.append(self.get_userid_info(i))
-                print(list)
                 for text in list:
                     if not (text == name):
                         self.click_btn_specify_custom(m)
                         sleep(3)
-                        t = self.gettexts_texts_clients_adders()
-                        sleep(1)
+                        t = []
+                        for i in self.gettexts_texts_full_adders():
+                            t.append(self.get_userid_info(i))
                         self.check_exist_in_lists(name, t)
-                        self.GetScreen('查看添加人列表')
                         sleep(1)
                         self._back()
                         sleep(2)
@@ -339,12 +347,10 @@ class ClientPage(BasePage):
                     if not (text == name):
                         self.click_btn_specify_custom(m)
                         sleep(3)
-                        t = self.gettexts_texts_clients_adders()
-                        sleep(1)
-                        try:
-                            self.check_exist_in_lists(name, t)
-                        except Exception:
-                            self.GetScreen('查看添加人列表')
+                        t = []
+                        for i in self.gettexts_texts_full_adders():
+                            t.append(self.get_userid_info(i))
+                        self.check_exist_in_lists(name, t)
                         sleep(1)
                         self._back()
                         sleep(2)
