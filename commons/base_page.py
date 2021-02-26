@@ -434,6 +434,18 @@ class BasePage(object):
             m.scroll(vertical=vertical)
             sleep(3)
 
+    def force_scroll_screen(self, vertical=-10):
+        """
+        :param element: 目标元素，即想要看到的元素
+        :param vertical: 每一步垂直滚动的距离， +向上，-向下
+        """
+        m = PyMouse()
+        x_dim, y_dim = m.screen_size()
+        m.move(x_dim // 2, y_dim // 2)
+        m.scroll(vertical=vertical)
+        sleep(2)
+
+
     # 将参数写入config.ini
     def set_ini(self, page, var, msg):
         conf = ConfigParser()
