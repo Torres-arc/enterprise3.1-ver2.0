@@ -114,6 +114,7 @@ class clientgroupcodepage:
     actscene1 = conf.get('client_group_code_page', 'actscene1')
     actscene = conf.get('client_group_code_page', 'actscene')
     groupname = conf.get('client_group_code_page', 'groupname')
+    groupname2 = conf.get('client_group_code_page', 'groupname2')
     editgname = conf.get('client_group_code_page', 'editgname')
     guide = conf.get('client_group_code_page', 'guide')
     date = conf.get('client_group_code_page', 'date')

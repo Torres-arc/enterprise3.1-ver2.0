@@ -13,7 +13,7 @@ class AddEmployeeCode(unittest.TestCase):
         cls.driver = driver_config()
         cls.driver.implicitly_wait(5)
         LoginPage(cls.driver).login()
-        ClientGroupCodePage(cls.driver).click_client_group_code_page()
+        ClientGroupCodePage(cls.driver).switch_to_current()
         log().info('开始执行:客户群活码页面的自动化测试')
     @classmethod
     def tearDownClass(cls):
@@ -28,8 +28,7 @@ class AddEmployeeCode(unittest.TestCase):
                                                                act_scene=clientgroupcodepage.actscene,
                                                                group_name=clientgroupcodepage.groupname,
                                                                guide=clientgroupcodepage.guide,
-                                                               date=clientgroupcodepage.date,
-                                                               limit=clientgroupcodepage.limit)
+                                                               date=clientgroupcodepage.date)
         self.driver.refresh()
         log().info('执行结束:用例-添加客户群活码')
 
@@ -38,9 +37,8 @@ class AddEmployeeCode(unittest.TestCase):
         """测试管理客户群活码"""
         self.driver.refresh()
         log().info('开始执行:用例-管理客户群活码')
-        ClientGroupCodePage(self.driver).manage_reality_code(group_name=clientgroupcodepage.editgname,
-                                                             date=clientgroupcodepage.date2,
-                                                             limit=clientgroupcodepage.limit2)
+        ClientGroupCodePage(self.driver).manage_reality_code(group_name=clientgroupcodepage.groupname2,
+                                                             date=clientgroupcodepage.date2)
         self.driver.refresh()
         log().info('执行结束:用例-管理客户群活码')
 
@@ -51,7 +49,7 @@ class AddEmployeeCode(unittest.TestCase):
         log().info('开始执行:用例-编辑客户群活码')
         ClientGroupCodePage(self.driver).edit_client_group_code(act_name=clientgroupcodepage.actname1,
                                                                 act_scene=clientgroupcodepage.actscene1)
-        self.driver.refresh()
+        ClientGroupCodePage(self.driver).switch_to_current()
         log().info('执行结束:用例-编辑客户群活码')
 
     # @unittest.skip('1')
