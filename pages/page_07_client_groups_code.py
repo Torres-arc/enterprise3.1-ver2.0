@@ -1,9 +1,7 @@
 from selenium.webdriver.common.by import By
 from commons.base_page import BasePage
-from selenium.webdriver.common.keys import Keys
 import os
 from time import sleep
-from pykeyboard import PyKeyboard
 
 
 # 客户群活码
