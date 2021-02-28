@@ -3,346 +3,344 @@ from commons.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 import os
-from pykeyboard import PyKeyboard
+
 
 # 员工活码
 class WelcomingMessagePage(BasePage):
-    # 元素定位信息
-    # 欢迎语页面（公共）
-    _welcoming_message_page = (By.XPATH, '//li[text()="欢迎语"]')
-    _update_photo = (By.XPATH, '(//button[@class="el-button el-button--file el-button--small is-plain"])[1]')
-    _update_file = (By.XPATH, '(//button[@class="el-button el-button--file el-button--small is-plain"])[2]')
+    """元素定位信息"""
+    # 客户营销tab
+    _btn_client_marketing_tab = (By.XPATH, '//span[text()="客户营销"]/..')
+    # 员工活码页面
+    _btn_welcome_page = (By.XPATH, '//li[text()=" 欢迎语 "]')
+    # 部门员工tab
+    _btn_department_client_tab = (By.XPATH, '//div[text()="部门员工欢迎语"]')
 
-    # 员工欢迎语
-    _em_welcoming_message_page = (By.XPATH, '//div[contains(text(),"员工欢迎语")and(@id="tab-1")]')
-    # 新建员工欢迎语元素
-    _add_em_welcoming_message = (By.XPATH, '//span[contains(text(),"新建员工欢迎语")]')
-    _update_info_button = (By.XPATH, '//span[text()="添加图片/网页/小程序消息"]')
-    _save_em_welcoming_message = (By.XPATH, '(//div[@class="el-form-item__content"]/button)[1]')
-    # 编辑员工欢迎语元素
-    _edit_em_welcoming_message = (By.XPATH, '(//button[@class="el-button el-button--text el-button--medium"])[1]')
-    _sava_edit_em_welcoming_message = (By.XPATH, '//span[text()="保存"]')
-    # 删除员工欢迎语元素
-    _delete_em_welcoming_message = (By.XPATH, '(//button[@class="el-button el-button--text el-button--medium"])[2]')
-    _sure_delete_em_welcoming_message = (
-        By.XPATH, '//button[@class="el-button el-button--default el-button--small el-button--primary "]')
+    # 员工欢迎语页面
+    # 新建员工欢迎语按钮
+    _btn_create_client_welcome = (By.XPATH, '//span[text()="新建员工欢迎语"]/..')
+    # 员工欢迎语列表
+    _texts_clients_welcome = (By.CSS_SELECTOR, '#pane-0 tbody tr td:first-child div')
+    # 员工页面编辑按钮
+    _btn_client_edit = (By.CSS_SELECTOR, '#pane-0 tbody tr td:nth-child(4) button')
+    # 员工页面删除按钮
+    _btn_client_delete = (By.CSS_SELECTOR, '#pane-0 tbody tr td:nth-child(4) button+button')
+    # 员工页面删除确认按钮
+    _btn_client_delete_confirm = (By.CSS_SELECTOR, '.el-message-box__btns  button+button')
+    # 员工页面搜索输入框
+    _input_client_search = (By.CSS_SELECTOR, '#pane-0 input[placeholder$="关键词"]')
+    # 员工页面查询按钮
+    _btn_client_search = (By.CSS_SELECTOR, '#pane-0 .search button')
 
-    # 部门员工欢迎语
-    _deptem_welcoming_message_page = (By.CSS_SELECTOR, '#tab-3')
-    # 通过员工云夏搜索
-    _selete_users = (By.XPATH, '(//input[@placeholder="请输入欢迎语关键词"])[2]')
-    _total = (By.XPATH, '(//span[text()="共 1 条"])[2]')
-    # 新建部门员工欢迎语元素
-    _deptem_welcoming_message = (By.XPATH, '(//i[@class="el-icon-plus"])[2]')
-    _add_user = (By.XPATH, '//span[text()="添加"]')
-    _select_user = (By.XPATH, '//input[@placeholder="请输入关键词"]')
-    _user = (By.XPATH, '//span[@class="custom-tree-node"]')
-    _confirm_user_page = (By.XPATH, '((//div[@class="dialog-footer"])[1]/button)[2]')
-    _save_deptem_welcoming_message = (By.XPATH, '((//div[@class="el-form-item__content"])[3]/button)[1]')
-    # 编辑部门员工欢迎语元素
-    _edit_deptem_welcoming_message = (By.XPATH, '(//td[@class="el-table_2_column_9  "]/div/button)[1]')
-    _sava_edit_deptem_welcoming_message = (By.XPATH, '//span[text()="保存"]')
-    # 删除部门员工欢迎语元素
-    _delete_deptem_welcoming_message = (By.XPATH, '(//td[@class="el-table_2_column_9  "]/div/button)[2]')
-    _sure_delete_deptem_welcoming_message = (
-        By.XPATH, '//button[@class="el-button el-button--default el-button--small el-button--primary "]')
+    # 部门员工欢迎语页面
+    # 新建部门员工欢迎语按钮
+    _btn_create_department_client_welcome = (By.XPATH, '//span[text()="新建部门员工欢迎语"]/..')
+    # 部门员工欢迎语列表
+    _texts_department_clients_welcome = (By.CSS_SELECTOR, '#pane-1 tbody tr td:first-child div')
+    # 部门员工页面编辑按钮
+    _btn_department_client_edit = (By.CSS_SELECTOR, '#pane-1 tbody tr td:nth-child(4) button')
+    # 部门员工页面删除按钮
+    _btn_department_client_delete = (By.CSS_SELECTOR, '#pane-1 tbody tr td:nth-child(4) button+button')
+    # 部门员工页面搜索输入框
+    _input_department_client_search = (By.CSS_SELECTOR, '#pane-1 input[placeholder$="关键词"]')
+    # 部门员工页面查询按钮
+    _btn_department_client_search = (By.CSS_SELECTOR, '#pane-1 .search button')
 
-    # 客户群欢迎语
-    _cp_welcoming_message_page = (By.XPATH, '//div[contains(text(),"客户群欢迎语")]')
-    # 新建客户群欢迎语
-    _add_cp_welcoming_message = (By.XPATH, '//span[contains(text(),"新建客户群欢迎语")]')
-    _save_cp_welcoming_message = (By.XPATH, '//span[text()="保存"]')
-    # 编辑客户群欢迎语
-    _edit_cp_welcoming_message = (By.XPATH, '(//td[@class="el-table_3_column_13  "]/div/button)[1]')
-    _save_edit_cp_welcoming_message = (By.XPATH, '//span[text()="保存"]')
-    # 删除客户群欢迎语
-    _delete_cp_welcoming_message = (By.XPATH, '(//td[@class="el-table_3_column_13  "]/div/button)[2]')
-    _sure_delete_cp_welcoming_message = (
-        By.XPATH, '//button[@class="el-button el-button--default el-button--small el-button--primary "]')
+    # 添加素材按钮
+    _btn_add_materials = (By.XPATH, '//div[text()="添加图片/网页/小程序消息"]')
+    # 添加图片按钮
+    _btn_add_pic = (By.CSS_SELECTOR, '.material-type-list>div')
+    # 欢迎语输入框
+    _input_welcome = (By.CSS_SELECTOR, 'textarea')
+    # 新建按钮
+    _btn_create = (By.XPATH, '//span[text()="新建"]/..')
+    # 插入客户昵称按钮
+    _btn_insert_client_nickname = (By.XPATH, '//span[text()="插入客户昵称"]/..')
+    # 添加员工按钮
+    _btn_select_staff = (By.XPATH, '//span[text()="添加"]/..')
+    # 保存按钮
+    _btn_save = (By.XPATH, '//span[text()="保存"]/..')
 
-    # 欢迎语输入(公共)
-    _welcoming_message = (By.XPATH, '//textarea')
+    # 组织架构
+    # 员工搜索输入框
+    _input_select_staff = (By.CSS_SELECTOR, 'input[placeholder="请输入关键词"]')
+    # 员工节点
+    _btn_staff_node = (By.CSS_SELECTOR, '.custom-tree-node')
+    # 选择确认按钮
+    _btn_confirm = (By.CSS_SELECTOR, 'div[aria-label="组织架构"] div[class$="footer"] button+button')
 
-    # 元素操作并进行封装
-    # 欢迎语页面
-    def click_welcoming_message_page(self):
-        self.find_Element(self._welcoming_message_page).click()
+    """元素定位层"""
+    # 客户营销tab
+    def get_btn_client_marketing_tab(self):
+        return self.find_Element(self._btn_client_marketing_tab)
+    # 员工活码页面
+    def get_btn_welcome_page(self):
+        return self.find_Element(self._btn_welcome_page)
+    # 客户群活码tab
+    def get_btn_department_client_tab(self):
+        return self.find_Element(self._btn_department_client_tab)
 
-    # 员工欢迎语
-    # 点击跳转员工欢迎语页面
-    def click_em_welcomingmessage(self):
-        self.find_Element(self._em_welcoming_message_page).click()
+    # 员工欢迎语页面
+    # 新建员工欢迎语按钮
+    def get_btn_create_client_welcome(self):
+        return self.find_Element(self._btn_create_client_welcome)
+    # 员工欢迎语列表
+    def get_texts_clients_welcome(self):
+        return self.find_Elements(self._texts_clients_welcome)
+    # 员工页面编辑按钮
+    def get_btn_client_edit(self):
+        return self.find_Element(self._btn_client_edit)
+    # 员工页面删除按钮
+    def get_btn_client_delete(self):
+        return self.find_Element(self._btn_client_delete)
+    # 员工页面删除确认按钮
+    def get_btn_client_delete_confirm(self):
+        return self.find_Element(self._btn_client_delete_confirm)
+    # 员工页面搜索输入框
+    def get_input_client_search(self):
+        return self.find_Element(self._input_client_search)
+    # 员工页面查询按钮
+    def get_btn_client_search(self):
+        return self.find_Element(self._btn_client_search)
 
-    # 点击新建员工欢迎语按钮
-    def click_add_em_welcomingmessage(self):
-        self.find_Element(self._add_em_welcoming_message).click()
+    # 部门员工欢迎语页面
+    # 新建部门员工欢迎语按钮
+    def get_btn_create_department_client_welcome(self):
+        return self.find_Element(self._btn_create_department_client_welcome)
+    # 部门员工欢迎语列表
+    def get_texts_department_clients_welcome(self):
+        return self.find_Elements(self._texts_department_clients_welcome)
+    # 部门员工页面编辑按钮
+    def get_btn_department_client_edit(self):
+        return self.find_Element(self._btn_department_client_edit)
+    # 部门员工页面删除按钮
+    def get_btn_department_client_delete(self):
+        return self.find_Element(self._btn_department_client_delete)
+    # 部门员工页面搜索输入框
+    def get_input_department_client_search(self):
+        return self.find_Element(self._input_department_client_search)
+    # 部门员工页面查询按钮
+    def get_btn_department_client_search(self):
+        return self.find_Element(self._btn_department_client_search)
 
-    # 在新建员工欢迎语页面，输入欢迎语内容
-    def input_em_welcomingmessage(self):
-        self.find_Element(self._welcoming_message).send_keys('测试员工欢迎语，勿使用')
+    # 添加素材按钮
+    def get_btn_add_materials(self):
+        return self.find_Element(self._btn_add_materials)
+    # 添加图片按钮
+    def get_btn_add_pic(self):
+        return self.find_Element(self._btn_add_pic)
+    # 欢迎语输入框
+    def get_input_welcome(self):
+        return self.find_Element(self._input_welcome)
+    # 新建按钮
+    def get_btn_create(self):
+        return self.find_Element(self._btn_create)
+    # 插入客户昵称按钮
+    def get_btn_insert_client_nickname(self):
+        return self.find_Element(self._btn_insert_client_nickname)
+    # 添加员工按钮
+    def get_btn_select_staff(self):
+        return self.find_Element(self._btn_select_staff)
+    # 保存按钮
+    def get_btn_save(self):
+        return self.find_Element(self._btn_save)
 
-    # 将鼠标移至到上传图片/网页/小程序按钮
-    def moveto__update_info_button(self):
-        self.find_Element(self._update_info_button).click()
+    # 组织架构
+    # 员工搜索输入框
+    def get_input_select_staff(self):
+        return self.find_Element(self._input_select_staff)
+    # 员工节点
+    def get_btn_staff_node(self):
+        return self.find_Element(self._btn_staff_node)
+    # 选择确认按钮
+    def get_btn_confirm(self):
+        return self.find_Element(self._btn_confirm)
 
-    # 点击图片进行图片上传
-    def input_update_photo(self):
-        self.find_Element(self._update_photo).click()
+    """元素操作层"""
+    # 客户营销tab
+    def click_btn_client_marketing_tab(self):
+        return self.click_element(self.get_btn_client_marketing_tab())
+    # 员工活码页面
+    def click_btn_welcome_page(self):
+        return self.click_element(self.get_btn_welcome_page())
+    # 客户群活码tab
+    def click_btn_department_client_tab(self):
+        return self.click_element(self.get_btn_department_client_tab())
+
+    # 员工欢迎语页面
+    # 新建员工欢迎语按钮
+    def click_btn_create_client_welcome(self):
+        return self.click_element(self.get_btn_create_client_welcome())
+    # 员工欢迎语列表
+    def gettexts_texts_clients_welcome(self):
+        return self.get_elements_values(self.get_texts_clients_welcome())
+    # 员工页面编辑按钮
+    def click_btn_client_edit(self):
+        return self.click_element(self.get_btn_client_edit())
+    # 员工页面删除按钮
+    def click_btn_client_delete(self):
+        return self.click_element(self.get_btn_client_delete())
+    # 员工页面删除确认按钮
+    def click_btn_client_delete_confirm(self):
+        return self.click_element(self.get_btn_client_delete_confirm())
+    # 员工页面搜索输入框
+    def sendkeys_input_client_search(self, value):
+        return self.send_keys(self.get_input_client_search(), value)
+    # 员工页面查询按钮
+    def click_btn_client_search(self):
+        return self.click_element(self.get_btn_client_search())
+
+    # 部门员工欢迎语页面
+    # 新建部门员工欢迎语按钮
+    def click_btn_create_department_client_welcome(self):
+        return self.click_element(self.get_btn_create_department_client_welcome())
+    # 部门员工欢迎语列表
+    def gettexts_texts_department_clients_welcome(self):
+        return self.get_elements_values(self.get_texts_department_clients_welcome())
+    # 部门员工页面编辑按钮
+    def click_btn_department_client_edit(self):
+        return self.click_element(self.get_btn_department_client_edit())
+    # 部门员工页面删除按钮
+    def click_btn_department_client_delete(self):
+        return self.click_element(self.get_btn_department_client_delete())
+    # 部门员工页面搜索输入框
+    def sendkeys_input_department_client_search(self, value):
+        return self.send_keys(self.get_input_department_client_search(), value)
+    # 部门员工页面查询按钮
+    def click_btn_department_client_search(self):
+        return self.click_element(self.get_btn_department_client_search())
+
+    # 添加素材按钮
+    def click_btn_add_materials(self):
+        return self.click_element(self.get_btn_add_materials())
+    # 添加图片按钮
+    def click_btn_add_pic(self):
+        return self.click_element(self.get_btn_add_pic())
+    # 欢迎语输入框
+    def sendkeys_input_welcome(self, value):
+        return self.send_keys(self.get_input_welcome(), value)
+    # 新建按钮
+    def click_btn_create(self):
+        return self.click_element(self.get_btn_create())
+    # 插入客户昵称按钮
+    def click_btn_insert_client_nickname(self):
+        return self.click_element(self.get_btn_insert_client_nickname())
+    # 添加员工按钮
+    def click_btn_select_staff(self):
+        return self.click_element(self.get_btn_select_staff())
+    # 保存按钮
+    def click_btn_save(self):
+        return self.click_element(self.get_btn_save())
+
+    # 组织架构
+    # 员工搜索输入框
+    def sendkeys_input_select_staff(self, value):
+        return self.send_keys(self.get_input_select_staff(), value)
+    # 员工节点
+    def click_btn_staff_node(self):
+        return self.click_element(self.get_btn_staff_node())
+    # 选择确认按钮
+    def click_btn_confirm(self):
+        return self.click_element(self.get_btn_confirm())
+
+    """业务层"""
+    def switch_to_current(self):
+        self.click_btn_client_marketing_tab()
         sleep(2)
-        path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)) + '//materials//pic//photo.png')
-        k = PyKeyboard()
-        k.tap_key(k.shift_key)
-        k.type_string(path)
-        sleep(1)
-        k.tap_key(k.enter_key)
-        sleep(2)
-        # os.system('D:\\huhuijun\\updateinfo\\udphoto.exe')
-
-    # 点击保存员工欢迎语页面
-    def click_save_emwelcomingmessage(self):
-        self.find_Element(self._save_em_welcoming_message).click()
-
-    # 点击编辑员工欢迎语按钮
-    def click_edit_em_welcoming_message(self):
-        self.find_Element(self._edit_em_welcoming_message).click()
-
-    # 在编辑员工欢迎语页面，修改欢迎语内容
-    def input_edit_em_welcoming_message(self):
-        self.find_Element(self._welcoming_message).clear()
-        self.find_Element(self._welcoming_message).send_keys('测试编辑员工欢迎语，勿使用')
-
-    # 点击保存编辑员工欢迎语页面
-    def click_sava_edit_em_welcoming_message(self):
-        self.find_Element(self._sava_edit_em_welcoming_message).click()
-
-    # 点击删除员工欢迎语按钮
-    def click_delete_em_welcoming_message(self):
-        self.find_Element(self._delete_em_welcoming_message).click()
-
-    # 在弹出是否确定删除提示框页面，点击确定按钮
-    def click_sure_delete_em_welcoming_message(self):
-        self.find_Element(self._sure_delete_em_welcoming_message).click()
-
-
-
-    # 部门员工欢迎语
-    # 点击跳转部门员工欢迎语页面
-    def click_deptemwelcomingmessage_page(self):
-        self.find_Element(self._deptem_welcoming_message_page).click()
-
-    # 通过输入欢迎语关键字搜索欢迎语
-    def input_selete_users(self):
-        self.find_Element(self._selete_users).send_keys('勿使用')
-        self.find_Element(self._selete_users).send_keys(Keys.ENTER)
-
-    # 稍后处理
-    # 若存在欢迎语，则进行删除操作，若没有，则刷新页面
-    # def search_by_welcomingmessage(self):
-    #     self.find_element(self._selete_users).send_keys('勿使用')
-
-    # 点击新建部门员工欢迎语按钮
-    def click_deptemwelcomingmessage(self):
-        self.find_Element(self._deptem_welcoming_message).click()
-
-    # 点击添加员工按钮
-    def click_add_user(self):
-        self.find_Element(self._add_user).click()
-
-    # 在添加员工页面，输入员工名称进行搜索
-    def input_select_user(self, value):
-        self.find_Element(self._select_user).send_keys(value)
-        self.find_Element(self._select_user).send_keys(Keys.ENTER)
-
-    # 勾选所选员工
-    def click_user(self):
-        self.find_Element(self._user).click()
-
-    # 保存添加员工页面信息
-    def click_confirm_user_page(self):
-        self.find_Element(self._confirm_user_page).click()
-
-    # 输入欢迎语内容
-    def input_deptwelcomingmessage(self):
-        self.find_Element(self._welcoming_message).send_keys('测试部门员工欢迎语，勿使用')
-
-    # 点击保存部门员工欢迎语页面
-    def click_save_deptemwelcomingmessage(self):
-        self.find_Element(self._save_deptem_welcoming_message).click()
-
-    # 点击编辑部门员工欢迎语
-    def cilik_edit_deptem_welcoming_message(self):
-        self.find_Element(self._edit_deptem_welcoming_message).click()
-
-    # 在编辑部门员工欢迎语页面，修改欢迎语内容
-    def input_edit_deptem_welcoming_message(self):
-        self.find_Element(self._welcoming_message).clear()
-        self.find_Element(self._welcoming_message).send_keys('测试编辑部门员工欢迎语，勿使用')
-
-    # 点击保存部门员工欢迎语页面
-    def click_sava_edit_deptem_welcoming_message(self):
-        self.find_Element(self._sava_edit_deptem_welcoming_message).click()
-
-    # 点击删除部门员工欢迎语
-    def click_delete_deptem_welcoming_message(self):
-        self.find_Element(self._delete_deptem_welcoming_message).click()
-
-    # 在弹出是否确定删除提示框页面，点击确定按钮
-    def click_sure_delete_deptem_welcoming_message(self):
-        self.find_Element(self._sure_delete_deptem_welcoming_message).click()
-
-
-
-    # 客户群欢迎语
-    # 点击跳转客户群欢迎语页面
-    def click_cpwelcomingmessage_page(self):
-        self.find_Element(self._cp_welcoming_message_page).click()
-
-    # 点击新建客户群欢迎语按钮
-    def click_cp_welcoming_message(self):
-        self.find_Element(self._add_cp_welcoming_message).click()
-
-    # 在新建客户群欢迎语页面，输入欢迎语内容
-    def input_welcoming_message(self):
-        self.find_Element(self._welcoming_message).send_keys('测试客户群欢迎语，勿使用')
-
-    def click_save_cp_welcoming_message(self):
-        self.find_Element(self._save_cp_welcoming_message).click()
-
-    # 点击编辑客户群欢迎语按钮
-    def click_edit_cp_welcoming_message(self):
-        self.find_Element(self._edit_cp_welcoming_message).click()
-
-    # 在编辑客户群欢迎语页面，修改欢迎语内容
-    def input_edit_cp_welcoming_message(self):
-        self.find_Element(self._welcoming_message).clear()
-        self.find_Element(self._welcoming_message).send_keys('测试编辑客户群欢迎语，勿使用')
-
-    # 点击保存客户群欢迎语页面
-    def click_save_edit_cp_welcoming_message(self):
-        self.find_Element(self._save_edit_cp_welcoming_message).click()
-
-    # 点击删除客户群欢迎语按钮
-    def click_delete_cp_welcoming_message(self):
-        self.find_Element(self._delete_cp_welcoming_message).click()
-
-    # 在弹出是否确定删除提示框页面，点击确定按钮
-    def click_sure_delete_cp_welcoming_message(self):
-        self.find_Element(self._sure_delete_cp_welcoming_message).click()
-
-    '''业务层'''
-
-    # 员工欢迎语：新建/编辑/删除
-    def addEmmessage(self):
+        self.click_btn_welcome_page()
         sleep(3)
-        self.click_welcoming_message_page()
-        sleep(2)
-        self.click_add_em_welcomingmessage()
-        sleep(2)
-        self.input_em_welcomingmessage()
-        sleep(3)
-        self.moveto__update_info_button()
-        sleep(2)
-        self.input_update_photo()
-        sleep(5)
-        self.click_save_emwelcomingmessage()
-        sleep(5)
 
-    def editEmmessage(self):
-        sleep(3)
-        self.click_welcoming_message_page()
+    def create_welcome(self, type, msg, staff=None):
+        if type == 'client':
+            self.click_btn_create_client_welcome()
+        elif type == "dep":
+            self.click_btn_department_client_tab()
+            sleep(2)
+            self.click_btn_create_department_client_welcome()
+            sleep(2)
+            self.click_btn_select_staff()
+            sleep(2)
+            self.sendkeys_input_select_staff(staff)
+            sleep(1)
+            self.tap_keyboard('enter')
+            sleep(2)
+            self.click_btn_staff_node()
+            sleep(2)
+            self.click_btn_confirm()
+        else:
+            print("未知的欢迎语类型")
+            return
         sleep(2)
-        self.click_edit_em_welcoming_message()
+        self.sendkeys_input_welcome(msg)
         sleep(2)
-        self.input_edit_em_welcoming_message()
-        sleep(3)
-        self.click_sava_edit_em_welcoming_message()
-        sleep(5)
+        self.click_btn_insert_client_nickname()
+        sleep(2)
+        self.click_btn_create()
+        sleep(2)
+        if type == "client":
+            wellist = self.gettexts_texts_clients_welcome()
+        elif type == "dep":
+            wellist = self.gettexts_texts_department_clients_welcome()
+        else:
+            print("未知的欢迎语类型")
+            return
+        self.assert_Equal(wellist[0], (msg+'#客户昵称#'))
 
-    def deleteEmmessage(self):
-        sleep(3)
-        self.click_welcoming_message_page()
-        sleep(2)
-        self.click_delete_em_welcoming_message()
-        sleep(2)
-        self.click_sure_delete_em_welcoming_message()
-        sleep(2)
+    def search_key_words(self, type, key):
+        if type == "client":
+            self.sendkeys_input_client_search(key)
+            sleep(2)
+            self.click_btn_client_search()
+            sleep(2)
+            wellist = self.gettexts_texts_clients_welcome()
+        elif type == "dep":
+            self.click_btn_department_client_tab()
+            sleep(2)
+            self.sendkeys_input_department_client_search(key)
+            sleep(2)
+            self.click_btn_department_client_search()
+            sleep(2)
+            wellist = self.gettexts_texts_department_clients_welcome()
+        else:
+            print("未知的欢迎语类型")
+            return
+        for i in wellist:
+            self.check_exist_in_lists(key, i)
 
-    # 部门员工欢迎语：新建/编辑/删除
-    def addDeptemmessage(self, value):
-        sleep(3)
-        self.click_deptemwelcomingmessage_page()
+    def edit_welcome(self, type, edited_msg):
+        if type == "client":
+            self.click_btn_client_edit()
+        elif type == "dep":
+            self.click_btn_department_client_tab()
+            sleep(2)
+            self.click_btn_department_client_edit()
+        else:
+            print("未知的欢迎语类型")
+            return
         sleep(2)
-        self.click_deptemwelcomingmessage()
+        self.sendkeys_input_welcome(edited_msg)
         sleep(2)
-        self.click_add_user()
-        sleep(5)
-        self.input_select_user(value)
-        sleep(3)
-        self.click_user()
-        sleep(1)
-        self.click_confirm_user_page()
+        self.click_btn_save()
         sleep(2)
-        self.input_deptwelcomingmessage()
-        sleep(2)
-        self.click_save_deptemwelcomingmessage()
-        sleep(5)
-        self.driver.refresh()
-        sleep(2)
+        if type == "client":
+            wellist = self.gettexts_texts_clients_welcome()
+        elif type == "dep":
+            wellist = self.gettexts_texts_department_clients_welcome()
+        else:
+            print("未知的欢迎语类型")
+            return
+        self.assert_Equal(wellist[0], edited_msg)
 
-    def editDeptemmessage(self):
-        sleep(3)
-        self.click_deptemwelcomingmessage_page()
+    def delete_wel(self, type, msg):
+        if type == "client":
+            self.click_btn_client_delete()
+        elif type == "dep":
+            self.click_btn_department_client_tab()
+            sleep(2)
+            self.click_btn_department_client_delete()
+        else:
+            print("未知的欢迎语类型")
+            return
         sleep(2)
-        self.cilik_edit_deptem_welcoming_message()
+        self.click_btn_client_delete_confirm()
         sleep(2)
-        self.input_edit_deptem_welcoming_message()
-        sleep(3)
-        self.click_sava_edit_deptem_welcoming_message()
-        sleep(5)
-        self.driver.refresh()
-        sleep(2)
-
-    def deleteDeptemmessage(self):
-        sleep(3)
-        self.click_deptemwelcomingmessage_page()
-        sleep(2)
-        self.click_delete_deptem_welcoming_message()
-        sleep(2)
-        self.click_sure_delete_deptem_welcoming_message()
-        sleep(2)
-
-    # 客户群欢迎语：新建/编辑/删除
-    def addCpmessage(self):
-        sleep(3)
-        self.click_cpwelcomingmessage_page()
-        sleep(2)
-        self.click_cp_welcoming_message()
-        sleep(2)
-        self.input_welcoming_message()
-        sleep(2)
-        self.click_save_cp_welcoming_message()
-        sleep(5)
-        self.driver.refresh()
-        sleep(2)
-
-    def editCpmessage(self):
-        sleep(3)
-        self.click_cpwelcomingmessage_page()
-        sleep(2)
-        self.click_edit_cp_welcoming_message()
-        sleep(2)
-        self.input_edit_cp_welcoming_message()
-        sleep(3)
-        self.click_save_edit_cp_welcoming_message()
-        sleep(5)
-        self.driver.refresh()
-        sleep(2)
-
-    def deleteCpmessage(self):
-        sleep(3)
-        self.click_cpwelcomingmessage_page()
-        sleep(2)
-        self.click_delete_cp_welcoming_message()
-        sleep(2)
-        self.click_sure_delete_cp_welcoming_message()
-        sleep(2)
+        self.check_not_exist_in_page(msg)

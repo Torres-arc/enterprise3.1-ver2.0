@@ -124,6 +124,12 @@ class clientgroupcodepage:
     search_key = conf.get('client_group_code_page', 'search_key')
 
 
+class welcomingmsgpage:
+    msg = conf.get('welcoming_msg_page', 'msg')
+    staff = conf.get('welcoming_msg_page', 'staff')
+    key = conf.get('welcoming_msg_page', 'key')
+    edited_msg = conf.get('welcoming_msg_page', 'edited_msg')
+
 class clientgrouppage:
     name = conf.get('client_group_page', 'name')
     master_name = conf.get('client_group_page', 'master_name')
