@@ -147,6 +147,14 @@ class clienttagpage:
     add = conf.get('client_tag_page', 'add')
 
 
+class materialposterpage:
+    group = conf.get('material_poster_page', 'group')
+    group2 = conf.get('material_poster_page', 'group2')
+    child_group = conf.get('material_poster_page', 'child_group')
+    poster = conf.get('material_poster_page', 'poster')
+    poster2 = conf.get('material_poster_page', 'poster2')
+
+
 class materialwebpage:
     title1 = conf.get('material_web_page', 'title1')
     pattitle = conf.get('material_web_page', 'parti_title')
