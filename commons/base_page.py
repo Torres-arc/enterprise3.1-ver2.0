@@ -421,7 +421,7 @@ class BasePage(object):
             k.tap_key(k.shift_key)
 
     # 滚动屏幕方法
-    def scroll_screen(self, element, vertical=-10):
+    def scroll_screen(self, element, vertical=-10, ele=None, zoom=1):
         """
         :param element: 目标元素，即想要看到的元素
         :param vertical: 每一步垂直滚动的距离， +向上，-向下
@@ -430,21 +430,28 @@ class BasePage(object):
         while not element.is_displayed():
             x_dim, y_dim = m.screen_size()
             sleep(3)
-            m.move(x_dim // 2, y_dim // 2)
+            if ele is None:
+                # m.move(x_dim // 2, y_dim // 2)
+                pass
+            else:
+                m.move(ele.location_once_scrolled_into_view.get('x') * zoom,
+                       ele.location_once_scrolled_into_view.get('y') * zoom)
             m.scroll(vertical=vertical)
             sleep(3)
 
-    def force_scroll_screen(self, vertical=-10):
+    def force_scroll_screen(self, vertical=-10, ele=None, zoom=1):
         """
         :param element: 目标元素，即想要看到的元素
         :param vertical: 每一步垂直滚动的距离， +向上，-向下
         """
         m = PyMouse()
-        x_dim, y_dim = m.screen_size()
-        m.move(x_dim // 2, y_dim // 2)
+        if ele is None:
+            pass
+        else:
+            m.move(ele.location_once_scrolled_into_view.get('x') * zoom,
+                   ele.location_once_scrolled_into_view.get('y') * zoom)
         m.scroll(vertical=vertical)
-        sleep(2)
-
+        sleep(3)
 
     # 将参数写入config.ini
     def set_ini(self, page, var, msg):
@@ -555,7 +562,8 @@ class BasePage(object):
         try:
             TestCase().assertIn(string1, string2)
         except AssertionError as e:
-            log().error('{}-{}-{},经验证,{} 不存在于字符串{}内，与预期不符'.format(str(module), str(lineno), name, string1, str(string2)))
+            log().error(
+                '{}-{}-{},经验证,{} 不存在于字符串{}内，与预期不符'.format(str(module), str(lineno), name, string1, str(string2)))
             raise e
         else:
             log().info('{}-{}-{},经验证,{} 存在于字符串"{}内，与预期相符'.format(str(module), str(lineno), name, string1, str(string2)))
