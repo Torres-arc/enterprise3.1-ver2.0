@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from commons.base_page import BasePage
 from time import sleep
-from pykeyboard import PyKeyboard
 from pymouse import PyMouse
 import os
 
