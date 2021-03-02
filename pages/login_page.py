@@ -26,7 +26,7 @@ class LoginPage(BasePage):
     
     # 切换新版后台
     # 立即体验按钮
-    _btn_switch = (By.XPATH, '//span[text()="立即体验"]/..')
+    _btn_switch = (By.XPATH, '//span[text()="知道了"]/..')
 
     '''元素定位层'''
     # 获取跳转登录界面元素
@@ -117,7 +117,7 @@ class LoginPage(BasePage):
         elif rc.version == '3.1' and rc.set_env == 'www':
             self.version31_login(ver_31_www.url, ver_31_www.username, ver_31_www.password)
         try:
-            self.check_exist_in_page('管理后台改版')
+            self.check_exist_in_page('旧版本下线通知')
         except:
             pass
         else:
