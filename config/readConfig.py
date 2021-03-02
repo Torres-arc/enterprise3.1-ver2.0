@@ -154,6 +154,14 @@ class materialposterpage:
     poster = conf.get('material_poster_page', 'poster')
     poster2 = conf.get('material_poster_page', 'poster2')
 
+class materialtextpage:
+    group = conf.get('material_text_page', 'group')
+    group2 = conf.get('material_text_page', 'group2')
+    child_group = conf.get('material_text_page', 'child_group')
+    msg = conf.get('material_text_page', 'msg')
+    msg2 = conf.get('material_text_page', 'msg2')
+
+
 
 class materialwebpage:
     title1 = conf.get('material_web_page', 'title1')
