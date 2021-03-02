@@ -237,6 +237,7 @@ def create_my_suit(dicts):
                         # print((str(a).split(' '))[0])
                         my_suit.addTest(unittest.TestLoader().loadTestsFromName(
                             '{}.{}.{}'.format(module, Class, (str(a).split(' '))[0])))
+
     return my_suit
 
 
